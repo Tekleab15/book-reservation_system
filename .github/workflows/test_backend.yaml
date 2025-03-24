@@ -11,16 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out the code
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set Up Environment (Node.js Example)
+      # Step 2: Set up Node.js environment
+      - name: Set Up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '20'
 
+      # Step 3: Install dependencies
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
+      # Step 4: Run backend tests
       - name: Run Tests
         run: npm test
