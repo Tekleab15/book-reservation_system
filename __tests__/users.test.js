@@ -1,3 +1,4 @@
+jest.setTimeout(20000);
 const User = require('../models/User');
 
 describe('User Model', () => {

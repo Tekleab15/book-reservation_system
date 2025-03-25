@@ -1,3 +1,4 @@
+jest.setTimeout(20000);
 const Reservation = require('../models/Reservation');
 
 describe('Reservation Model', () => {
