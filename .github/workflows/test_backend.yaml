@@ -1,5 +1,7 @@
+# GitHub Actions Workflow for Automating Book reservation Backend Tests
 name: Backend Tests
 
+# Trigger workflow on pushes and pull requests to the 'main' branch.
 on:
   push:
     branches: [ main ]
@@ -8,19 +10,27 @@ on:
 
 jobs:
   test:
+    # Use the latest Ubuntu runner provided by GitHub Actions.
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out the repository's code so that it can be used by subsequent tasks.
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Set up the Node.js environment.
+      # This installs Node.js (version 20 in this case) on the runner.
       - name: Set Up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '20'
 
+      # Step 3: Install project dependencies.
+      # 'npm ci' is used here because it installs dependencies from a clean slate based on the package-lock.json.
       - name: Install Dependencies
         run: npm ci
 
+      # Step 4: Run tests using Jest.
+      # This command executes the tests defined in your project (for example, using 'npm test').
       - name: Run Tests
         run: npm test
