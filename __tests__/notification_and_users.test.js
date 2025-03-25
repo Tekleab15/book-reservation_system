@@ -1,18 +1,22 @@
-jest.setTimeout(20000);
+jest.setTimeout(30000); // Extend timeout as needed
+
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const Notification = require('../models/Notification');
 const User = require('../models/User');
 
+let mongoServer;
+
 describe('Notification Model', () => {
   beforeAll(async () => {
-    await mongoose.connect('mongodb://localhost:27017/testdb', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    mongoServer = await MongoMemoryServer.create(); // Start the in-memory server
+    const uri = mongoServer.getUri();
+    await mongoose.connect(uri); // No need for extra options in Mongoose v6+
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    await mongoose.disconnect();
+    await mongoServer.stop();
   });
 
   test('Notification should reference a valid user', async () => {
